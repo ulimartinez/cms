@@ -1,0 +1,14 @@
+<h4>Safety & Security</h4>
+UTEP's research in transportation safety and security focuses on proper operational design of highway facilities and location planning of base stations of emergency service vehicles. Projects which the CTIS research group has undertaken are:
+                  <ul>
+                    <li><strong><em>A freeway on-ramp analysis on a portion of IH-10 within El Paso</em></strong>: Drivers traveling through this freeway section were forced to weave excessively through traffic during rush hours due to close-proximity on- and off-ramps on the freeway. Based on the analysis, recommendations were made to TxDOT, which included the closure of an on-ramp to minimize the risk of incidents in highly congested free-way sections. Another project was to analyze the safety and operational impacts of off-ramp queue split back onto the freeway main lanes due to a work zone downstream of the off-ramp.</li>
+                    <br/>
+                    <li><strong><em>Pedestrian safety and vehicle-vehicle collision minimization.</em></strong> This study has been carried out at several intersections within the El Paso area. In particular, the implementation of roundabouts were explored as viable intersection design options that address pedestrian safety and the minimization of vehicle conflict points while maintaining a high level of service through the intersections.</li>
+                    <br/>
+                    <li><strong><em>Large Truck Crash Severity.</em></strong>In recent years, a growing concern related to large-truck accidents has increased due to potential economic impacts and level of injury severity that can be sustained. Yet, studies related to large-truck involved crashes are scarce and lack human behavior factors that can greatly influence accident outcomes. In this study, we presented an analysis of data from the fusion of several national data sets addressing large-truck involved injury severity. This is done by considering human, road-environment, and vehicular factors in large-truck involved crashes on U.S. interstates. The findings indicate that the level of injury severity is highly influenced by a number of complex interactions of factors and that the effect of the some of the factors can vary across the observations.</li>
+                  </ul>
+              Example projects include:
+              <ul>
+                <li>Models to Allocate Emergency Resources to Cover Critical Infrastructures during a Large Scale Disaster, <u>Regional Geospatial Center</u>.</li>
+                <li>Models to Allocate Emergency Services to Cover Critical Transportation Infrastructures, <u>University Research Institute</u>.</li>
+              </ul>
