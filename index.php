@@ -1,3 +1,15 @@
+<?php
+/*
+	session_start();
+	$admin = false;
+	if(!isset($_SESSION['in'])){
+		header('Location: loginerror.php');
+	}
+	$admin = $_SESSION['admin'];
+	$title = $_SESSION['title'];
+	$dir = $_SESSION['dir'];
+ */
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +21,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>CTIS - Project Title</title>
+    <title>CTIS - <?php echo $title; ?></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -49,7 +61,7 @@
         <!-- Image Header -->
         <div class="row">
             <div class="col-lg-12">
-              <h1 style="text-align:center;">Project Title</h1>
+              <h1 style="text-align:center;"><?php echo $title; ?></h1>
               <hr>
               <img class="img-responsive" src="sampleimage.png" alt="Sample image" style="margin:auto">
               <br>
@@ -57,11 +69,16 @@
               <hr>
               <div class="form-group">
                 <label for="comment">Project description</label>
-                <textarea class="form-control" rows="5" id="comment" placeholder="Lorem ipsum dolor sit amet, mea ut autem nihil. Ei eum putant salutatus, eu aliquip interesset sea. Apeirian molestiae cum eu, an etiam forensibus quo. Ad vix sonet nihil nemore, an has regione erroribus, vis cu idque audire corrumpit. Ei novum facilis per, simul meliore salutandi no pri. His feugiat verterem cu.
-
-Eu quem vocibus ius, no pro zril contentiones. Nam ad erant everti persequeris, ad mea odio aliquam, nec te sumo hendrerit delicatissimi. Cu vel hinc concludaturque, veniam lucilius tacimates id usu. Per munere doming tacimates eu, his an hinc discere."></textarea>
-                <br>
-                <button class="btn btn-success">Save Changes</button>
+                <?php
+                	if($admin)
+					echo '<textarea class="form-control" rows="5" id="comment" placeholder="Lorem ipsum dolor sit amet, mea ut autem nihil. Ei eum putant salutatus, eu aliquip interesset sea. Apeirian molestiae cum eu, an etiam forensibus quo. Ad vix sonet nihil nemore, an has regione erroribus, vis cu idque audire corrumpit. Ei novum facilis per, simul meliore salutandi no pri. His feugiat verterem cu.
+ Eu quem vocibus ius, no pro zril contentiones. Nam ad erant everti persequeris, ad mea odio aliquam, nec te sumo hendrerit delicatissimi. Cu vel hinc concludaturque, veniam lucilius tacimates id usu. Per munere doming tacimates eu, his an hinc discere."></textarea>'.
+ '<br><button class="btn btn-success">Save Changes</button>';
+					else {
+						echo '<p>Lorem ipsum dolor sit amet, mea ut autem nihil. Ei eum putant salutatus, eu aliquip interesset sea. Apeirian molestiae cum eu, an etiam forensibus quo. Ad vix sonet nihil nemore, an has regione erroribus, vis cu idque audire corrumpit. Ei novum facilis per, simul meliore salutandi no pri. His feugiat verterem cu.
+ Eu quem vocibus ius, no pro zril contentiones. Nam ad erant everti persequeris, ad mea odio aliquam, nec te sumo hendrerit delicatissimi. Cu vel hinc concludaturque, veniam lucilius tacimates id usu. Per munere doming tacimates eu, his an hinc discere.</p>';
+					}
+				?>
                 <br><br>
                 <div class="col-lg-6">
                   <div class="panel panel-primary">
