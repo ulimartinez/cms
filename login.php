@@ -54,13 +54,13 @@
 	      Register here.
 	    </div>
 	    <form name="login" action="register.php" method="post">
-	      <input placeholder='Username' type='text' name="uid" id="uid">
-	      <input placeholder='Password' type='password' name="pwd" id="pwd">
-	      <input placeholder='Email Address' type='email' name="eml" id="eml">
-	      <input placeholder='First Name' type='text' name="fna" id="fna">
-	      <input placeholder='Last Name' type='text' name="lna" id="lna">
-	      <input placeholder='Affilation' type='text' name="aff" id="aff">
-	      <input placeholder='Phone' type='text' name="phn" id="phn">
+	      <input placeholder='Username' type='text' name="uid" id="uid"/>
+	      <input placeholder='Password' type='password' name="pwd" id="pwd"/>
+	      <input placeholder='Email Address' type='email' name="eml" id="eml"/>
+	      <input placeholder='First Name' type='text' name="fna" id="fna"/>
+	      <input placeholder='Last Name' type='text' name="lna" id="lna"/>
+	      <input placeholder='Phone' type='text' name="phn" id="phn"/>
+	      <input type = "hidden" name = "request" value ="true" />
 	      <input type="submit" name="submit_2" value="Submit" />
 	    </form>
 	  </div>
