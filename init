@@ -1,0 +1,42 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+DROP SCHEMA IF EXISTS `projects` ;
+CREATE SCHEMA IF NOT EXISTS `projects` DEFAULT CHARACTER SET latin1 ;
+USE `projects` ;
+
+-- -----------------------------------------------------
+-- Table `projects`.`projects`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `projects`.`projects` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `dir` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 1000
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `projects`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `projects`.`users` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `salt` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NULL DEFAULT NULL,
+  `admin` BIT(1) NULL DEFAULT NULL,
+  `projects` VARCHAR(45) NULL DEFAULT NULL,
+  `approved` BIT(1) NULL DEFAULT b'0',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 1000
+DEFAULT CHARACTER SET = latin1;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

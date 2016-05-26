@@ -1,5 +1,5 @@
 <?php
-/*
+
 	session_start();
 	$admin = false;
 	if(!isset($_SESSION['in'])){
@@ -8,7 +8,7 @@
 	$admin = $_SESSION['admin'];
 	$title = $_SESSION['title'];
 	$dir = $_SESSION['dir'];
- */
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
