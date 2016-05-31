@@ -54,5 +54,40 @@
     else if(isset($_POST['logout'])){
         $_SESSION = array();
     }
+	else if(isset($_POST['register'])){
+		$username = $_POST['uid'];
+		$password = $_POST['pwd'];
+		$email = $_POST['eml'];
+		$fname = $_POST['fna'];
+		$lname = $_POST['lna'];
+		$phone = $_POST['phn'];
+		$project = $_POST['projectid'];
+		if(checkEmpty($username) OR
+		checkEmpty($password) OR
+		checkEmpty($email) OR
+		checkEmpty($fname) OR
+		checkEmpty($lname) OR
+		checkEmpty($phone)){
+			echo "Must input all values";
+		}
+		else{
+			require('config.php');
+			require_once 'random/random.php';
+			$salt = bin2hex(random_bytes(6));
+			$password = $password . $salt;
+			$password = md5($password);
+            $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
+            if ($conn -> connect_error) {
+                die("Connection failed: " . $conn -> connecterror);
+            }
+            $sql = "INSERT INTO users (username, password, salt, email, projects, phone) VALUES('$username', '$password', '$salt', '$email', '$project', '$phone')";
+			$result = $conn->query($sql);
+			if($result){
+				echo "created successfully";
+			}
+			else
+				echo $sql;
+		}
+	}
 	$conn->close();
 ?>

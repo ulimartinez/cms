@@ -53,7 +53,7 @@
 	      <div class='fa fa-times-circle'></div>
 	      Register here.
 	    </div>
-	    <form name="login" action="register.php" method="post">
+	    <form name="login" action="loginhandler.php" method="post">
 	      <input placeholder='Username' type='text' name="uid" id="uid"/>
 	      <input placeholder='Password' type='password' name="pwd" id="pwd"/>
 	      <input placeholder='Email Address' type='email' name="eml" id="eml"/>
@@ -61,7 +61,8 @@
 	      <input placeholder='Last Name' type='text' name="lna" id="lna"/>
 	      <input placeholder='Phone' type='text' name="phn" id="phn"/>
 	      <input type = "hidden" name = "request" value ="true" />
-	      <input type="submit" name="submit_2" value="Submit" />
+	      <input type = "hidden" name = "projectid" value = <?php echo $projectid; ?> />
+	      <input type="submit" name="register" value="Submit" />
 	    </form>
 	  </div>
 	
