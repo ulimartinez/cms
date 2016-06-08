@@ -8,6 +8,8 @@
 	$admin = $_SESSION['admin'];
 	$title = $_SESSION['title'];
 	$dir = $_SESSION['dir'];
+	
+	$description = file_get_contents("projects/$dir/description.txt");
  
 ?>
 <!DOCTYPE html>
@@ -63,20 +65,21 @@
             <div class="col-lg-12">
               <h1 style="text-align:center;"><?php echo $title; ?></h1>
               <hr>
-              <img class="img-responsive" src="sampleimage.png" alt="Sample image" style="margin:auto">
+              <img class="img-responsive" src=<?php echo '"projects/'.$dir.'/cover.png"'; ?> alt="Sample image" style="margin:auto">
               <br>
-              <button class="btn btn-default">Change Image</button>
+              <?php
+              if($admin)
+			  	echo '<button class="btn btn-default">Change Image</button>';
+			  ?>
               <hr>
               <div class="form-group">
                 <label for="comment">Project description</label>
                 <?php
                 	if($admin)
-					echo '<textarea class="form-control" rows="5" id="comment" placeholder="Lorem ipsum dolor sit amet, mea ut autem nihil. Ei eum putant salutatus, eu aliquip interesset sea. Apeirian molestiae cum eu, an etiam forensibus quo. Ad vix sonet nihil nemore, an has regione erroribus, vis cu idque audire corrumpit. Ei novum facilis per, simul meliore salutandi no pri. His feugiat verterem cu.
- Eu quem vocibus ius, no pro zril contentiones. Nam ad erant everti persequeris, ad mea odio aliquam, nec te sumo hendrerit delicatissimi. Cu vel hinc concludaturque, veniam lucilius tacimates id usu. Per munere doming tacimates eu, his an hinc discere."></textarea>'.
+					echo '<textarea class="form-control" rows="5" id="comment" placeholder="">' . $description . '</textarea>'.
  '<br><button class="btn btn-success">Save Changes</button>';
 					else {
-						echo '<p>Lorem ipsum dolor sit amet, mea ut autem nihil. Ei eum putant salutatus, eu aliquip interesset sea. Apeirian molestiae cum eu, an etiam forensibus quo. Ad vix sonet nihil nemore, an has regione erroribus, vis cu idque audire corrumpit. Ei novum facilis per, simul meliore salutandi no pri. His feugiat verterem cu.
- Eu quem vocibus ius, no pro zril contentiones. Nam ad erant everti persequeris, ad mea odio aliquam, nec te sumo hendrerit delicatissimi. Cu vel hinc concludaturque, veniam lucilius tacimates id usu. Per munere doming tacimates eu, his an hinc discere.</p>';
+						echo '<p>' . $description . '</p>';
 					}
 				?>
                 <br><br>
@@ -94,17 +97,17 @@
                         <th>File</th>
                         <th>Action</th>
                       </thead>
-                      <tbody>
+                      <tbody id="filesTable">
                         <tr>
-                          <td>1st Presentation</td>
-                          <td><button class="btn btn-success">Download</button></td>
-                          <td><button class="btn btn-danger">Delete</button></td>
+                          <td colspan="3">No files at this time</td>
                         </tr>
-                        <tr>
-                          <td><input class="form-control" type="text"></td>
-                          <td><input class="form-control" type="file"></td>
-                          <td><button class="btn btn-success">Upload</button></td>
-                        </tr>
+                        <form action="uploadHandler.php" id="imageForm" enctype="multipart/form-data" method="post">
+	                        <tr>
+	                          <td><input class="form-control" id="filename" name="filename" type="text"></td>
+	                          <td><input class="form-control" name="file" type="file"></td>
+	                          <td><input type="submit" id="upload" name="upload" class="btn btn-success" value="Upload"></input></td>
+	                        </tr>
+	                    </form>
                       </tbody>
                     </table>
                   </div>
@@ -169,6 +172,48 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/tabs.js"></script>
+    
+    <!-- get files script -->
+    <script type="text/javascript">
+    	$(document).ready(getFiles);
+    	function getFiles(){
+    		$.post('getContent.php', {'files': true}, function(data){
+    			if(data.length > 1){
+    				$($('#filesTable').children()[0]).remove();
+    				$(data).prependTo('#filesTable');    				
+    			}
+    		});
+    	}
+    	$('#filesTable').delegate('.delete', 'click', function(){
+    		var delBtn = this;
+    		$.ajax({
+    			url: 'uploadHandler.php',
+    			type: 'DELETE',
+    			data: {'del': $(delBtn).data('file')},
+    			success: function(){
+    				$(delBtn).closest('tr').remove();
+    				alert('File deleted');
+    			}
+		    });
+    	});
+    	$("#imageForm").on("submit", function(e) {
+    		var data = new FormData($('form')[0]);
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr("action"),
+                type: 'POST',
+                data: data,
+                cache: false,
+    			contentType: false,
+                processData: false,
+                success: function(data) {
+                    if(data.hasOwnProperty('success')){
+                    	getFiles();
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

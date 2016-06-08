@@ -4,7 +4,7 @@
 		$projectid = $_GET['projectid'];
 	}
 	else
-		header('Location: /projects');
+		header('Location: /research');
 ?>
 <!DOCTYPE html>
 <html >
@@ -50,7 +50,7 @@
 	  <div class='register'>
 	    <h2>Create An Account</h2>
 	    <div class='alert'>
-	      <div class='fa fa-times-circle'></div>
+	      <div class='fa fa-times-circle' data-dismiss="alert"></div>
 	      Register here.
 	    </div>
 	    <form name="login" action="loginhandler.php" method="post">
@@ -68,7 +68,7 @@
 	
 	</div>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
+    <script src="js/bootstrap.min.js"></script>
     
 
     <script>
