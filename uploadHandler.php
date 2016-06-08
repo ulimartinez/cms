@@ -1,16 +1,17 @@
 <?php
 	//hnadles file uploads
+	header('Content-type: application/json');
+	session_start();
+	$toReturn = array();
+	require('config.php');
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
+    if ($conn -> connect_error) {
+        die("Connection failed: " . $conn -> connecterror);
+    }
+    $sql = "SELECT dir FROM projects WHERE id =" . $_SESSION['projectid'];
+	$result = $conn->query($sql);
+	
 	if(isset($_POST['filename'])){
-		header('Content-type: application/json');
-		session_start();
-		$toReturn = array();
-		require('config.php');
-        $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
-        if ($conn -> connect_error) {
-            die("Connection failed: " . $conn -> connecterror);
-        }
-        $sql = "SELECT dir FROM projects WHERE id =" . $_SESSION['projectid'];
-		$result = $conn->query($sql);
 		//if the directory was obtained successfully
 		if($result->num_rows > 0){
 			$row = $result->fetch_assoc();
@@ -21,14 +22,22 @@
 				$toReturn['success'] = "$directory/$name";
 		        move_uploaded_file($tmp_name, "$directory/$name");
 			}
-			$conn->close();
 		}
-		echo json_encode($toReturn);
 	}
 	else if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
 		parse_str(file_get_contents("php://input"));
 		if(isset($del)){
-			unlink($del);
+			$toReturn['deleted'] = unlink($del);
 		}
 	}
+	else if(isset($_POST['desc'])){
+		$txt = $_POST['desc'];
+		if($result->num_rows){
+			$row = $result->fetch_assoc();
+			$directory = 'projects/'.$row['dir'];
+			$toReturn['modified'] = file_put_contents($directory.'/description.txt', $txt);
+		}
+	}
+	$conn->close();
+	echo json_encode($toReturn);
 ?>

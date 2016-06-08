@@ -1,7 +1,7 @@
 <?php
 	session_start();
+	$id = $_SESSION['projectid'];
 	if(isset($_POST['files'])){
-		$id = $_SESSION['projectid'];
 		//get the directory of this project from the database
 		require('config.php');
         $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
@@ -31,5 +31,21 @@
                </tr>
 			 */
 		}
+	}
+	else if(isset($_POST['users'])){
+		require('config.php');
+        $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
+        if ($conn -> connect_error) {
+            die("Connection failed: " . $conn -> connecterror);
+        }
+        $sql = "SELECT username, admin, email, id FROM users WHERE projects LIKE '%" . $id . "%' AND approved = 1";
+		$result = $conn->query($sql);
+		$toReturn = array();
+		$toReturn['approved'] = $result->fetch_all();
+		$sql = "SELECT username, admin, email FROM users WHERE projects LIKE '%" . $id . "%' AND approved = 0";
+		$result = $conn->query($sql);
+		$toReturn['unapproved'] = $result->fetch_all();
+		header('Content-type: application/json');
+		echo json_encode($toReturn);
 	}
 ?>

@@ -76,8 +76,8 @@
                 <label for="comment">Project description</label>
                 <?php
                 	if($admin)
-					echo '<textarea class="form-control" rows="5" id="comment" placeholder="">' . $description . '</textarea>'.
- '<br><button class="btn btn-success">Save Changes</button>';
+					echo '<textarea class="form-control" rows="5" id="description" placeholder="">' . $description . '</textarea>'.
+ '<br><button class="btn btn-success" id="saveDesc">Save Changes</button>';
 					else {
 						echo '<p>' . $description . '</p>';
 					}
@@ -127,23 +127,17 @@
                         <th>email</th>
                         <th>Action</th>
                       </thead>
-                      <tbody>
+                      <tbody id="usersTable">
                         <tr>
-                          <td>jperez</td>
-                          <td>Read Only</td>
-                          <td>jperez@utep.edu</td>
-                          <td><button class="btn btn-danger">Remove</button></td>
-                        </tr>
-                        <tr>
-                          <td><input class="form-control" type="text"></td>
+                          <td><select class="form-control" id="unapprovedSelect"></td>
                           <td>
-                            <select>
+                            <select id="typeSelect" class="form-control">
                               <option>Read Only</option>
-                              <option>Read & Edit</option>
+                              <option>Read & Write</option>
                             </select>
                           </td>
-                          <td><input class="form-control" type="text"></td>
-                          <td><button class="btn btn-success">Add</button></td>
+                          <td><input class="form-control" id="emailSelect" type="text" readonly=""></td>
+                          <td><button id="saveUser" class="btn btn-success">Add</button></td>
                         </tr>
                       </tbody>
                     </table>
@@ -175,12 +169,38 @@
     
     <!-- get files script -->
     <script type="text/javascript">
-    	$(document).ready(getFiles);
+    	$(document).ready(function(){
+    		getFiles();
+    		getUsers();
+    	});
     	function getFiles(){
     		$.post('getContent.php', {'files': true}, function(data){
     			if(data.length > 1){
     				$($('#filesTable').children()[0]).remove();
     				$(data).prependTo('#filesTable');    				
+    			}
+    		});
+    	}
+    	function getUsers(){
+    		$.post('getContent.php', {'users': true}, function(data){
+    			if(data.hasOwnProperty('approved')){
+    				var approved = data.approved;
+    				approved.forEach(function(entry){
+    					var type = "Read Only";
+    					if(entry[1]){
+    						type = "Read & Write";
+    					}
+    					$('<tr><td>'+entry[0]+'</td><td>'+type+'</td><td>'+entry[2]+'</td></tr>').prependTo('#usersTable');
+    				});
+    			}
+    			if(data.hasOwnProperty('unapproved')){
+    				var unapproved = data.unapproved;
+    				unapproved.forEach(function(entry){
+    					$('<option class="userDropDn" data-mail="'+entry[2]+'">'+entry[0]+'</option>').appendTo('#unapprovedSelect');
+    				});
+    				$('.userDropDn').bind('click', function(e){
+    					$('#emailSelect').val($(this).data('mail'));
+    				});
     			}
     		});
     	}
@@ -212,6 +232,18 @@
                     }
                 }
             });
+        });
+        $('#saveDesc').click(function(e){
+        	$.post('uploadHandler.php', {'desc': $('#description').val()}, function(data){
+        		if(data.hasOwnPropery('modified') && data.modified){
+        			console.log("Success");
+        		}
+        	});
+        });
+        $('#saveUser').click(function(e){
+        	$.post('user.php', {'approve': $('#unapprovedSelect').children(':selected').text(), 'type': $('#typeSelect').children(':selected').text()}, function(data){
+        		console.log(data);
+        	});
         });
     </script>
 </body>
