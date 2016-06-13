@@ -69,7 +69,8 @@
               <br>
               <?php
               if($admin)
-			  	echo '<button class="btn btn-default">Change Image</button>';
+			  	echo '<button class="btn btn-default" id="cover">Change Image</button>'.
+			  '<form enctype="multipart/form-data" action="uploadHandler.php" method="post"><input id="coverinput" type="file" name="coverimg" onchange="this.form.submit()" style="display: none;" /><input type="hidden" name="cover" value="img" /></form>';
 			  ?>
               <hr>
               <div class="form-group">
@@ -187,10 +188,10 @@
     				var approved = data.approved;
     				approved.forEach(function(entry){
     					var type = "Read Only";
-    					if(entry[1]){
+    					if(entry[1] == 1){
     						type = "Read & Write";
     					}
-    					$('<tr><td>'+entry[0]+'</td><td>'+type+'</td><td>'+entry[2]+'</td></tr>').prependTo('#usersTable');
+    					$('<tr><td>'+entry[0]+'</td><td>'+type+'</td><td colspan="2"><a href="mailto:'+entry[2]+'">' +entry[2]+'</a></td></tr>').prependTo('#usersTable');
     				});
     			}
     			if(data.hasOwnProperty('unapproved')){
@@ -230,6 +231,9 @@
                     if(data.hasOwnProperty('success')){
                     	getFiles();
                     }
+                    else if(data.hasOwnProperty('error')){
+                    	alert(data.error);
+                    }
                 }
             });
         });
@@ -244,6 +248,16 @@
         	$.post('user.php', {'approve': $('#unapprovedSelect').children(':selected').text(), 'type': $('#typeSelect').children(':selected').text()}, function(data){
         		console.log(data);
         	});
+        });
+        
+        //cover input
+        $("#cover").click(function(e){
+        	e.preventDefault();
+        	$('#coverinput').click();
+        });
+        $('#coverinput').change(function(){
+        	//ajax to upload cover
+        	
         });
     </script>
 </body>

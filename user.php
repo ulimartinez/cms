@@ -14,7 +14,7 @@
 	    if ($conn -> connect_error) {
 	        die("Connection failed: " . $conn -> connecterror);
 	    }
-	    $sql = "UPDATE users SET approved=1, admin=$admin WHERE username LIKE \"" . $_POST['approve'];
+	    $sql = "UPDATE users SET approved=1, admin=$admin WHERE username LIKE \"" . $_POST['approve'] . "\"";
 		$result = $conn->query($sql);
 		$toReturn['result'] = $result;
 		$toReturn['sql'] = $sql;
